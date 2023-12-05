@@ -7,12 +7,12 @@ public class Orc extends Character {
 
     public Orc(Pair damage, int armor) {
         super(damage, armor);
-        super.setAbilityDamage(abilityDamage);
+        super.setCriticalDamage(criticalDamage);
     }
 
     @Override
-    public int getAbilityDamage() {
-        return abilityDamage;
+    public int getCriticalDamage() {
+        return criticalDamage;
     }
 
 }

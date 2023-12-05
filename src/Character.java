@@ -2,7 +2,7 @@ public class Character {
 
     private int health, armor;
     private Pair damage;
-    protected int abilityDamage = 3;
+    protected int criticalDamage = 3;
 
     public Character(Pair damage, int armor) {
         setDamage(damage);
@@ -21,8 +21,8 @@ public class Character {
         this.armor = armor;
     }
 
-    public void setAbilityDamage(int abilityDamage) {
-        this.abilityDamage = abilityDamage;
+    public void setCriticalDamage(int criticalDamage) {
+        this.criticalDamage = criticalDamage;
     }
 
     public int getHealth() {
@@ -37,8 +37,8 @@ public class Character {
         return armor;
     }
 
-    public int getAbilityDamage() {
-        return abilityDamage;
+    public int getCriticalDamage() {
+        return criticalDamage;
     }
 
     @Override

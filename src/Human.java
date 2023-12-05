@@ -4,12 +4,12 @@ public class Human extends Character {
 
     public Human(Pair damage, int armor) {
         super(damage, armor);
-        super.setAbilityDamage(abilityDamage - 1);
+        super.setCriticalDamage(criticalDamage - 1);
     }
 
     @Override
-    public int getAbilityDamage() {
-        return abilityDamage;
+    public int getCriticalDamage() {
+        return criticalDamage;
     }
 
 }

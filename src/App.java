@@ -11,21 +11,21 @@ public class App {
         // winner depends on these factors:
         // - randomized damage intervals,
         // - randomized critical strike (15% chance),
-        // - randomized parries (35% chance)
+        // - randomized parries (25% chance)
 
         Archer archer1 = new Archer(new Pair(4, 8), 0);
         Goblin goblin1 = new Goblin(new Pair(7, 9), 0);
         Knight knight1 = new Knight(new Pair(3, 4), 6);
         Ogre ogre1 = new Ogre(new Pair(5, 6), 4);
 
-        combatManager.showBattleInfo(knight1, ogre1);
-        Character winner1 = fight(knight1, ogre1);
+        combatManager.showBattleInfo(knight1, archer1);
+        Character winner1 = fight(knight1, archer1);
 
-        combatManager.showBattleInfo(winner1, archer1);
-        Character winner2 = fight(winner1, archer1);
+        combatManager.showBattleInfo(ogre1, winner1);
+        Character winner2 = fight(ogre1, winner1);
 
-        combatManager.showBattleInfo(winner2, goblin1);
-        fight(winner2, goblin1);
+        combatManager.showBattleInfo(goblin1, winner2);
+        fight(goblin1, winner2);
 
     }
 
@@ -44,15 +44,28 @@ public class App {
         } else {
             if (attacker.getHealth() <= 0) {
                 winner = defender;
-                System.out.println(GREEN + defender.getClass().getName() + " won with " + defender.getHealth()
-                        + " health and " + defender.getArmor() + " armor remaining!\n" + RESET);
+                System.out
+                        .print(GREEN + defender.getClass().getName() + " won with " + defender.getHealth() + " health");
+
+                if (combatManager.hasArmor(defender)) {
+                    System.out.print(" and " + defender.getArmor() + " armor");
+                }
+
+                System.out.println(" remaining!\n" + RESET);
             }
             if (defender.getHealth() <= 0) {
                 winner = attacker;
-                System.out.println(GREEN + attacker.getClass().getName() + " won with " + attacker.getHealth()
-                        + " health and " + attacker.getArmor() + " armor remaining!\n" + RESET);
+                System.out
+                        .print(GREEN + attacker.getClass().getName() + " won with " + attacker.getHealth() + " health");
+
+                if (combatManager.hasArmor(attacker)) {
+                    System.out.print(" and " + attacker.getArmor() + " armor");
+                }
+
+                System.out.println(" remaining!\n" + RESET);
             }
         }
+
         return winner;
     }
 }

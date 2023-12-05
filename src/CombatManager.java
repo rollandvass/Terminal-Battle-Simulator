@@ -21,9 +21,9 @@ public class CombatManager {
                         (hasArmor(defender) ? " broke " + defender.getClass().getName() + "'s armor and"
                                 : " critically striked " + defender.getClass().getName() + " and")
                         +
-                        " dealt " + RED + (attacker.getAbilityDamage() + damage) + YELLOW + " damage!" + RESET;
+                        " dealt " + RED + (attacker.getCriticalDamage() + damage) + YELLOW + " damage!" + RESET;
                 System.out.println(message);
-                defender.setHealth(Math.max(0, defender.getHealth() - attacker.getAbilityDamage()));
+                defender.setHealth(Math.max(0, defender.getHealth() - attacker.getCriticalDamage()));
                 defender.setArmor(0);
                 TimeUnit.MILLISECONDS.sleep(SLEEP_DURATION);
             } else {
@@ -57,10 +57,10 @@ public class CombatManager {
         return defender.getArmor() > 0;
     }
 
-    // 65% success rate of attack OR 35% chance of parry
+    // 75% success rate of attack OR 35% chance of parry
     public boolean attackSuccessful() {
         int random = new Random().nextInt(1, 101);
-        return random <= 65;
+        return random <= 75;
     }
 
     // 15% chance to critical strike
@@ -88,7 +88,8 @@ public class CombatManager {
 
     public void showCharacterInfo(Character character) {
         System.out.println(character.getClass().getName() + "\t" + "[Health: " + character.getHealth()
-                + " | Damage: " + character.getDamage().getFirst() + "-" + character.getDamage().getSecond()
+                + " | Damage: " + character.getDamage().getFirst() + "-"
+                + (character.getDamage().getSecond() + character.getCriticalDamage())
                 + " | Armor: " + character.getArmor() + "]");
     }
 }
