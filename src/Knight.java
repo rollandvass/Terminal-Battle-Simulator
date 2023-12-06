@@ -5,4 +5,10 @@ public class Knight extends Human {
         setHealth(baseHealth + 2);
     }
 
+    @Override
+    public void resetStats(int health, int armor) {
+        setHealth(baseHealth + 2);
+        // reset armor
+    }
+
 }

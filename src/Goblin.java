@@ -5,4 +5,9 @@ public class Goblin extends Orc {
         setHealth(baseHealth / 2 - 3);
     }
 
+    @Override
+    public void resetStats(int health, int armor) {
+        setHealth(baseHealth / 2 - 3);
+    }
+
 }

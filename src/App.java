@@ -9,9 +9,9 @@ public class App {
 
     public static void main(String[] args) throws Exception {
         // winner depends on these factors:
-        // - randomized damage intervals,
+        // - randomized damage (interval),
         // - randomized critical strike (15% chance),
-        // - randomized parries (25% chance)
+        // - randomized parries (20% chance)
 
         Archer archer1 = new Archer(new Pair(4, 8), 0);
         Goblin goblin1 = new Goblin(new Pair(7, 9), 0);
@@ -19,13 +19,14 @@ public class App {
         Ogre ogre1 = new Ogre(new Pair(5, 6), 4);
 
         combatManager.showBattleInfo(knight1, archer1);
-        Character winner1 = fight(knight1, archer1);
+        Character winner = fight(knight1, archer1);
 
-        combatManager.showBattleInfo(ogre1, winner1);
-        Character winner2 = fight(ogre1, winner1);
+        combatManager.showBattleInfo(winner, ogre1);
+        winner = fight(winner, ogre1);
 
-        combatManager.showBattleInfo(goblin1, winner2);
-        fight(goblin1, winner2);
+        combatManager.showBattleInfo(winner, goblin1);
+        winner = fight(winner, goblin1);
+        combatManager.showChampion(winner);
 
     }
 
@@ -52,6 +53,7 @@ public class App {
                 }
 
                 System.out.println(" remaining!\n" + RESET);
+                winner.resetStats(winner.getHealth(), winner.getArmor());
             }
             if (defender.getHealth() <= 0) {
                 winner = attacker;
@@ -63,14 +65,10 @@ public class App {
                 }
 
                 System.out.println(" remaining!\n" + RESET);
+                winner.resetStats(winner.getHealth(), winner.getArmor());
             }
         }
 
         return winner;
     }
 }
-
-// Possible TODOs:
-// tournament
-// more classes (mount & blade factions (or troops))
-// equipment ?

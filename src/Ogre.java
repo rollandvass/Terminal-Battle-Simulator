@@ -5,4 +5,10 @@ public class Ogre extends Orc {
         setHealth(baseHealth / 2);
     }
 
+    @Override
+    public void resetStats(int health, int armor) {
+        setHealth(baseHealth / 2);
+        // reset armor
+    }
+
 }

@@ -41,6 +41,11 @@ public class Character {
         return criticalDamage;
     }
 
+    public void resetStats(int health, int armor) {
+        setHealth(health);
+        setArmor(armor);
+    }
+
     @Override
     public String toString() {
         return getClass().getName() + "\t[Health: " + getHealth() + " | Armor: " + getArmor() + "]";

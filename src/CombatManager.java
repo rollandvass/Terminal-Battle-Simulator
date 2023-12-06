@@ -57,13 +57,13 @@ public class CombatManager {
         return defender.getArmor() > 0;
     }
 
-    // 75% success rate of attack OR 35% chance of parry
+    // 80% success rate of attack OR 20% chance of parry
     public boolean attackSuccessful() {
         int random = new Random().nextInt(1, 101);
-        return random <= 75;
+        return random <= 80;
     }
 
-    // 15% chance to critical strike
+    // 15% chance to critical strike -- can't be parried
     public boolean criticallyStriked() {
         int random = new Random().nextInt(1, 101);
         return random <= 15;
@@ -91,5 +91,10 @@ public class CombatManager {
                 + " | Damage: " + character.getDamage().getFirst() + "-"
                 + (character.getDamage().getSecond() + character.getCriticalDamage())
                 + " | Armor: " + character.getArmor() + "]");
+    }
+
+    public void showChampion(Character character) {
+        System.out
+                .print(App.GREEN + character.getClass().getName() + " is the champion!" + RESET);
     }
 }
