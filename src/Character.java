@@ -1,12 +1,14 @@
 public class Character {
 
     private int health, armor;
+    protected int initialArmor;
     private Pair damage;
     protected int criticalDamage = 3;
 
     public Character(Pair damage, int armor) {
         setDamage(damage);
         setArmor(armor);
+        initialArmor = armor;
     }
 
     public void setHealth(int health) {
@@ -41,14 +43,16 @@ public class Character {
         return criticalDamage;
     }
 
-    public void resetStats(int health, int armor) {
+    public void resetStats() {
         setHealth(health);
-        setArmor(armor);
+        setArmor(initialArmor);
     }
 
     @Override
     public String toString() {
-        return getClass().getName() + "\t[Health: " + getHealth() + " | Armor: " + getArmor() + "]";
+        return getClass().getName() + "\t" + "[Health: " + getHealth()
+                + " | Damage: " + getDamage().getFirst() + "-" + (getDamage().getSecond() + getCriticalDamage())
+                + " | Armor: " + getArmor() + "]";
     }
 
 }

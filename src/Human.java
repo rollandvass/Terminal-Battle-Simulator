@@ -9,7 +9,7 @@ public class Human extends Character {
 
     @Override
     public int getCriticalDamage() {
-        return criticalDamage;
+        return super.getCriticalDamage();
     }
 
 }

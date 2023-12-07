@@ -1,32 +1,61 @@
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class App {
 
     static CombatManager combatManager = new CombatManager();
 
-    public static final String GREEN = "\033[0;32m"; // GREEN
-    public static final String RESET = "\033[0m"; // RESET
+    public static final String RED = "\033[0;31m";
+    public static final String GREEN = "\033[0;32m";
+    public static final String RESET = "\033[0m";
+
+    private static final int SLEEP_500 = 0;
+
+    static Knight knight = new Knight(new Pair(3, 4), 6);
+    static Archer archer = new Archer(new Pair(4, 8), 0);
+    static Ogre ogre = new Ogre(new Pair(5, 6), 5);
+    static Goblin goblin = new Goblin(new Pair(7, 8), 0);
+    static Warlock warlock = new Warlock(new Pair(4, 5), 0);
+    static Shaman shaman = new Shaman(new Pair(5, 6), 0);
+    static Monk monk = new Monk(new Pair(2, 4), 1);
+    static Priest priest = new Priest(new Pair(3, 4), 1);
 
     public static void main(String[] args) throws Exception {
-        // winner depends on these factors:
-        // - randomized damage (interval),
-        // - randomized critical strike (15% chance),
-        // - randomized parries (20% chance)
 
-        Archer archer1 = new Archer(new Pair(4, 8), 0);
-        Goblin goblin1 = new Goblin(new Pair(7, 9), 0);
-        Knight knight1 = new Knight(new Pair(3, 4), 6);
-        Ogre ogre1 = new Ogre(new Pair(5, 6), 4);
+        ArrayList<Character> fighters = new ArrayList<Character>();
+        fighters.add(knight);
+        fighters.add(archer);
+        fighters.add(ogre);
+        fighters.add(goblin);
+        fighters.add(warlock);
+        fighters.add(shaman);
+        fighters.add(monk);
+        fighters.add(priest);
 
-        combatManager.showBattleInfo(knight1, archer1);
-        Character winner = fight(knight1, archer1);
+        combatManager.showFighters(fighters);
 
-        combatManager.showBattleInfo(winner, ogre1);
-        winner = fight(winner, ogre1);
+        combatManager.showBattleInfo(knight, warlock);
+        Character winnerQF1 = fight(knight, warlock);
 
-        combatManager.showBattleInfo(winner, goblin1);
-        winner = fight(winner, goblin1);
-        combatManager.showChampion(winner);
+        combatManager.showBattleInfo(ogre, monk);
+        Character winnerQF2 = fight(ogre, monk);
+
+        combatManager.showBattleInfo(archer, shaman);
+        Character winnerQF3 = fight(archer, shaman);
+
+        combatManager.showBattleInfo(goblin, priest);
+        Character winnerQF4 = fight(goblin, priest);
+
+        combatManager.showBattleInfo(winnerQF1, winnerQF3);
+        Character winnerSF1 = fight(winnerQF1, winnerQF3);
+
+        combatManager.showBattleInfo(winnerQF2, winnerQF4);
+        Character winnerSF2 = fight(winnerQF2, winnerQF4);
+
+        combatManager.showBattleInfo(winnerSF1, winnerSF2);
+        Character finalWinner = fight(winnerSF1, winnerSF2);
+
+        combatManager.showChampion(finalWinner);
 
     }
 
@@ -36,37 +65,32 @@ public class App {
 
         if (attacker.getHealth() > 0 && defender.getHealth() > 0) {
             combatManager.attack(attacker, defender);
-            System.out.println(defender);
             System.out.println();
-            TimeUnit.MILLISECONDS.sleep(250);
+            TimeUnit.MILLISECONDS.sleep(SLEEP_500); // 250
 
             winner = fight(defender, attacker);
 
         } else {
             if (attacker.getHealth() <= 0) {
                 winner = defender;
-                System.out
-                        .print(GREEN + defender.getClass().getName() + " won with " + defender.getHealth() + " health");
-
-                if (combatManager.hasArmor(defender)) {
-                    System.out.print(" and " + defender.getArmor() + " armor");
-                }
-
-                System.out.println(" remaining!\n" + RESET);
-                winner.resetStats(winner.getHealth(), winner.getArmor());
-            }
-            if (defender.getHealth() <= 0) {
+            } else {
                 winner = attacker;
-                System.out
-                        .print(GREEN + attacker.getClass().getName() + " won with " + attacker.getHealth() + " health");
-
-                if (combatManager.hasArmor(attacker)) {
-                    System.out.print(" and " + attacker.getArmor() + " armor");
-                }
-
-                System.out.println(" remaining!\n" + RESET);
-                winner.resetStats(winner.getHealth(), winner.getArmor());
             }
+
+            combatManager.showKilled(attacker, defender);
+            TimeUnit.MILLISECONDS.sleep(SLEEP_500);
+            System.out
+                    .print(GREEN + winner.getClass().getName() + " won with " +
+                            winner.getHealth() + " health");
+
+            if (combatManager.hasArmor(winner)) {
+                System.out.print(" and " + winner.getArmor() + " armor");
+            }
+
+            System.out.println(" remaining!\n" + RESET);
+            attacker.resetStats();
+            defender.resetStats();
+
         }
 
         return winner;

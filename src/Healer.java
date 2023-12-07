@@ -1,8 +1,7 @@
-public class Orc extends Character {
+public class Healer extends Character {
+    protected int baseHealth = 14;
 
-    protected int baseHealth = 18;
-
-    public Orc(Pair damage, int armor) {
+    public Healer(Pair damage, int armor) {
         super(damage, armor);
         super.setCriticalDamage(criticalDamage);
     }
@@ -11,5 +10,4 @@ public class Orc extends Character {
     public int getCriticalDamage() {
         return super.getCriticalDamage();
     }
-
 }

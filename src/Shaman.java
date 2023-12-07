@@ -1,6 +1,6 @@
-public class Archer extends Human {
+public class Shaman extends Caster {
 
-    public Archer(Pair damage, int armor) {
+    public Shaman(Pair damage, int armor) {
         super(damage, armor);
         setHealth(baseHealth - 3);
     }
