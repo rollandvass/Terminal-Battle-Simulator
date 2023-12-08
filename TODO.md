@@ -1,6 +1,5 @@
 TODO:
 
-1. Fix issue in FIXME.md
-2. Implement abilities from INFO.md
-3. Implement showcase from INFO.md
-4. Implement tournament from INFO.md
+1. Once a caster casts a spell, the enemy is burned on his turns
+2. Clean up and optimize code
+3. Thoroughly test the game and take action if necessary.

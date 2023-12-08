@@ -1,7 +1,7 @@
 public class Ogre extends Orc {
 
-    public Ogre(Pair damage, int armor) {
-        super(damage, armor);
+    public Ogre(Pair damage, int armor, int abilityValue) {
+        super(damage, armor, abilityValue);
         setHealth(baseHealth / 2 + 1);
     }
 
@@ -9,6 +9,11 @@ public class Ogre extends Orc {
     public void resetStats() {
         setHealth(baseHealth / 2 + 1);
         setArmor(initialArmor);
+    }
+
+    @Override
+    public int getAbilityValue() {
+        return abilityValue;
     }
 
 }

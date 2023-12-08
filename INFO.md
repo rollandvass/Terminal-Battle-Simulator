@@ -1,8 +1,8 @@
 # Winner depends on these factors:
 
 - randomized damage (interval),
-- if abilities were cast
-- randomized parries (20% chance)
+- randomized abilities (and who casted) - 15% chance,
+- randomized parries (and who parried) - 20% chance
 
 -
 
@@ -159,3 +159,53 @@ Monk attacked Knight and dealt 3 damage!
 # Monk healed himself for 5 health!
 
 Monk [Health: 18 | Damage: 2-4 | Armor: 0]
+
+-
+
+> Attacking logic
+
+```Java
+if (attackSuccessful()) {
+
+    if (abilityCasted()) {
+
+        if (attacker instanceof Human) {
+            // double strike attack
+            // handle defender armor
+            // update defender health
+            // print attack
+            // print defender
+        }
+
+        if (attacker instanceof Orc) {
+            // critical strike attack
+            // break armor
+            // update defender health
+            // print attack
+            // print defender
+        }
+
+        if (attacker instanceof Caster) {
+            // calculate burn amount
+            // burn ignores armor, so update defender health only
+            // print attack
+            // print defender
+        }
+
+        if (attacker instanceof Healer) {
+            // calculate heal amount
+            // update attacker health
+            // print heal
+            // print attacker
+        }
+
+    } else {
+        // classic attack
+        // handle armor
+        // print attack
+    }
+
+} else {
+    // print parry
+}
+```

@@ -1,9 +1,12 @@
 public class Character {
 
-    private int health, armor;
+    protected int health, armor;
     protected int initialArmor;
     private Pair damage;
-    protected int criticalDamage = 3;
+    protected int criticalDamage = 3; // to delete
+
+    protected int abilityValue;
+    protected Pair abilityValueInterval;
 
     public Character(Pair damage, int armor) {
         setDamage(damage);
@@ -25,6 +28,14 @@ public class Character {
 
     public void setCriticalDamage(int criticalDamage) {
         this.criticalDamage = criticalDamage;
+    } // to delete
+
+    public void setAbilityValue(int abilityValue) {
+        this.abilityValue = abilityValue;
+    }
+
+    public void setAbilityValueInterval(Pair abilityValueInterval) {
+        this.abilityValueInterval = abilityValueInterval;
     }
 
     public int getHealth() {
@@ -41,6 +52,14 @@ public class Character {
 
     public int getCriticalDamage() {
         return criticalDamage;
+    } // to delete
+
+    public int getAbilityValue() {
+        return abilityValue;
+    }
+
+    public Pair getAbilityValueInterval() {
+        return abilityValueInterval;
     }
 
     public void resetStats() {
@@ -51,7 +70,7 @@ public class Character {
     @Override
     public String toString() {
         return getClass().getName() + "\t" + "[Health: " + getHealth()
-                + " | Damage: " + getDamage().getFirst() + "-" + (getDamage().getSecond() + getCriticalDamage())
+                + " | Damage: " + getDamage().getFirst() + "-" + getDamage().getSecond()
                 + " | Armor: " + getArmor() + "]";
     }
 

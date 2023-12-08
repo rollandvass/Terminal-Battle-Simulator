@@ -104,6 +104,7 @@ public class Testing {
             statisticsWriter.write("Shaman: " + shamanWinCount + "\n");
             statisticsWriter.write("Monk: " + monkWinCount + "\n");
             statisticsWriter.write("Priest: " + priestWinCount + "\n");
+            statisticsWriter.write("\nAverage should be around " + numberOfRuns / 8);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

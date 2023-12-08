@@ -1,7 +1,7 @@
 public class Warlock extends Caster {
 
-    public Warlock(Pair damage, int armor) {
-        super(damage, armor);
+    public Warlock(Pair damage, int armor, Pair abilityValueInterval) {
+        super(damage, armor, abilityValueInterval);
         setHealth(baseHealth - 2);
     }
 
@@ -9,6 +9,11 @@ public class Warlock extends Caster {
     public void resetStats() {
         setHealth(baseHealth - 2);
         setArmor(initialArmor);
+    }
+
+    @Override
+    public Pair getAbilityValueInterval() {
+        return abilityValueInterval;
     }
 
 }

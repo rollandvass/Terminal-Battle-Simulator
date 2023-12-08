@@ -1,15 +1,16 @@
 public class Caster extends Character {
 
     protected int baseHealth = 14;
+    protected Pair abilityValueInterval;
 
-    public Caster(Pair damage, int armor) {
+    public Caster(Pair damage, int armor, Pair abilityValueInterval) {
         super(damage, armor);
-        super.setCriticalDamage(criticalDamage);
+        this.abilityValueInterval = abilityValueInterval;
     }
 
     @Override
-    public int getCriticalDamage() {
-        return super.getCriticalDamage();
+    public Pair getAbilityValueInterval() {
+        return abilityValueInterval;
     }
 
 }

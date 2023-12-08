@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -18,51 +17,115 @@ public class CombatManager {
 
     int matchCounter = 0;
 
+    int turnCounter = 0;
+
     public void attack(Character attacker, Character defender) throws InterruptedException {
+        turnCounter++;
         int damage = new Random().nextInt(attacker.getDamage().getFirst(), attacker.getDamage().getSecond() + 1);
 
-        if (attackSuccessful()) {
-            // critical strike can't be parried
-            if (criticallyStriked()) {
-                TimeUnit.MILLISECONDS.sleep(SLEEP_500);
-                String message = YELLOW + attacker.getClass().getName() +
-                        (hasArmor(defender) ? " broke " + defender.getClass().getName() + "'s armor and"
-                                : " critically striked " + defender.getClass().getName() + " and")
-                        +
-                        " dealt " + RED + (attacker.getCriticalDamage() + damage) + YELLOW + " damage!" + RESET;
-                System.out.println(message);
-                defender.setHealth(Math.max(0, defender.getHealth() - attacker.getCriticalDamage()));
-                defender.setArmor(0);
-                TimeUnit.MILLISECONDS.sleep(SLEEP_500);
-            } else {
-                TimeUnit.MILLISECONDS.sleep(SLEEP_500);
-                String message = PURPLE + attacker.getClass().getName() +
-                        " attacked " + defender.getClass().getName() +
-                        " and dealt " + RESET + RED + damage + RESET + PURPLE + " damage!" + RESET;
-                System.out.println(message);
-                TimeUnit.MILLISECONDS.sleep(SLEEP_500);
-            }
+        if (attackSuccessful()) { // good attack
 
-            if (hasArmor(defender)) {
-                int remainderDamage = Math.max(0, damage - defender.getArmor());
-                defender.setArmor(Math.max(0, defender.getArmor() - damage));
+            // check for ability cast
+            if (abilityCasted()) { // ability cast
 
-                if (remainderDamage > 0) {
-                    defender.setHealth(Math.max(0, defender.getHealth() - remainderDamage));
+                // instance checks
+                if (attacker instanceof Human) { // human - double strike
+                    int doubleStrikeDamage = (damage * 2) + attacker.getAbilityValue();
+                    // handle armor
+                    if (hasArmor(defender)) {
+                        int remainderDamage = doubleStrikeDamage - defender.getArmor();
+                        defender.setArmor(Math.max(0, defender.getArmor() - doubleStrikeDamage));
+
+                        if (remainderDamage > 0) {
+                            defender.setHealth(defender.getHealth() - remainderDamage);
+                        }
+                    } else {
+                        defender.setHealth(defender.getHealth() - doubleStrikeDamage);
+                    }
+
+                    System.out.println(YELLOW + attacker.getClass().getName() + " double striked "
+                            + defender.getClass().getName() + " and dealt " + RED + doubleStrikeDamage + YELLOW
+                            + " damage!" + RESET);
+
+                    if (defender.getHealth() > 0) {
+                        System.out.println(defender);
+                    }
                 }
-            } else {
-                defender.setHealth(Math.max(0, defender.getHealth() - damage));
-            }
 
-            if (defender.getHealth() > 0) {
-                System.out.println(defender);
-            }
+                if (attacker instanceof Orc) { // orc - critical strike (breaks armor if present)
+                    int criticalStrikeDamage = damage + attacker.getAbilityValue();
+                    // break armor
+                    if (hasArmor(defender)) {
+                        defender.setArmor(0);
+                        defender.setHealth(defender.getHealth() - criticalStrikeDamage);
+                        System.out.println(
+                                YELLOW + attacker.getClass().getName() + " broke " + defender.getClass().getName()
+                                        + "'s armor and dealt " + RED + criticalStrikeDamage + YELLOW + " damage!"
+                                        + RESET);
+                    } else {
+                        defender.setHealth(defender.getHealth() - criticalStrikeDamage);
+                        System.out.println(
+                                YELLOW + attacker.getClass().getName() + " critically striked "
+                                        + defender.getClass().getName()
+                                        + " and dealt " + RED + criticalStrikeDamage + YELLOW + " damage!" + RESET);
+                    }
 
-        } else {
-            TimeUnit.MILLISECONDS.sleep(SLEEP_500);
-            System.out.println(CYAN + defender.getClass().getName() +
-                    " parried " + attacker.getClass().getName() + "'s attack!" + RESET);
-            TimeUnit.MILLISECONDS.sleep(SLEEP_500);
+                    if (defender.getHealth() > 0) {
+                        System.out.println(defender);
+                    }
+                }
+
+                if (attacker instanceof Caster) { // caster - burn enemy every second turn
+                    int burnDamage = new Random().nextInt(attacker.getAbilityValueInterval().getFirst(),
+                            attacker.getAbilityValueInterval().getSecond() + 1);
+                    // ignores armor
+                    defender.setHealth(defender.getHealth() - burnDamage);
+                    System.out.println(
+                            YELLOW + attacker.getClass().getName() + "'s spell burned "
+                                    + defender.getClass().getName()
+                                    + " for " + RED + burnDamage + YELLOW + " health!" + RESET);
+
+                    if (defender.getHealth() > 0) {
+                        System.out.println(defender);
+                    }
+                    // not finished
+                    // once the spell is cast the enemy will be burned on his turns
+                }
+
+                if (attacker instanceof Healer) { // healer - heals for some health
+                    int healAmount = new Random().nextInt(attacker.getAbilityValueInterval().getFirst(),
+                            attacker.getAbilityValueInterval().getSecond() + 1);
+                    attacker.setHealth(attacker.getHealth() + healAmount);
+                    System.out.println(
+                            YELLOW + attacker.getClass().getName() + " healed himself for " + GREEN + healAmount
+                                    + YELLOW
+                                    + " health!" + RESET);
+                    System.out.println(attacker);
+                }
+
+            } else { // classic attack
+                // handle armor
+                if (hasArmor(defender)) {
+                    int remainderDamage = damage - defender.getArmor();
+                    defender.setArmor(Math.max(0, defender.getArmor() - damage));
+
+                    if (remainderDamage > 0) {
+                        defender.setHealth(defender.getHealth() - remainderDamage);
+                    }
+                } else {
+                    defender.setHealth(defender.getHealth() - damage);
+                }
+
+                System.out.println(PURPLE + attacker.getClass().getName() + " attacked " + defender.getClass().getName()
+                        + " and dealt " + RED + damage + PURPLE + " damage!" + RESET);
+
+                if (defender.getHealth() > 0) {
+                    System.out.println(defender);
+                }
+            }
+        } else { // attack parried
+            System.out.println(CYAN + defender.getClass().getName() + " parried " + attacker.getClass().getName()
+                    + "'s attack!" + RESET);
         }
     }
 
@@ -72,14 +135,18 @@ public class CombatManager {
         return random <= 80;
     }
 
-    // 15% chance to critical strike
-    public boolean criticallyStriked() {
+    // 15% chance to cast ability
+    public boolean abilityCasted() {
         int random = new Random().nextInt(1, 101);
         return random <= 15;
     }
 
     public boolean hasArmor(Character defender) {
         return defender.getArmor() > 0;
+    }
+
+    public boolean isTurnEven() {
+        return turnCounter % 2 == 0;
     }
 
     public void showKilled(Character attacker, Character defender) throws InterruptedException {
@@ -122,16 +189,27 @@ public class CombatManager {
             System.err.print(" *");
             System.out.println("\n");
             TimeUnit.MILLISECONDS.sleep(SLEEP_500); // 1000
+            System.out.println(character1);
+            System.out.println(character2 + "\n");
+            TimeUnit.MILLISECONDS.sleep(SLEEP_500); // 1000
+            System.out.println("Fight!\n");
+            TimeUnit.MILLISECONDS.sleep(SLEEP_500); // 1000
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    public void showFighters(ArrayList<Character> characters) {
-        for (Character fighter : characters) {
-            System.out.println(fighter);
-        }
-        System.out.println();
+    public void showClassesAndAbilities() {
+        System.out.println("Classes and abilities:\n");
+        System.out.println("Humans can double strike the enemy.");
+        System.out.println("Orcs can critically strike the enemy.");
+        System.out.println("Casters can cast a spell on the enemy.");
+        System.out.println("Healers can heal themselves.\n");
+
+        System.out.println("Double strike: Two hits & second hit has +1 damage");
+        System.out.println("Critical strike: Breaks armor & +2 damage");
+        System.out.println("Spell: Burns the enemy for 1-3 health on his turns & ignores armor");
+        System.out.println("Heal: Heal for 3-5 health\n");
     }
 
     public void showCharacterInfo(Character character) {
