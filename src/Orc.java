@@ -1,6 +1,6 @@
 public class Orc extends Character {
 
-    protected int baseHealth = 18;
+    protected int baseHealth = 9;
     protected int abilityValue;
 
     public Orc(Pair damage, int armor, int abilityValue) {

@@ -12,12 +12,12 @@ public class App {
 
     static Knight knight = new Knight(new Pair(2, 3), 4, 1);
     static Archer archer = new Archer(new Pair(3, 6), 0, 1);
-    static Ogre ogre = new Ogre(new Pair(3, 5), 3, 2);
+    static Ogre ogre = new Ogre(new Pair(3, 5), 2, 2);
     static Goblin goblin = new Goblin(new Pair(4, 7), 0, 2);
     static Warlock warlock = new Warlock(new Pair(4, 5), 0, new Pair(1, 3));
     static Shaman shaman = new Shaman(new Pair(5, 6), 0, new Pair(1, 3));
-    static Monk monk = new Monk(new Pair(2, 4), 1, new Pair(1, 4));
-    static Priest priest = new Priest(new Pair(2, 5), 1, new Pair(2, 4));
+    static Monk monk = new Monk(new Pair(2, 4), 1, new Pair(2, 5));
+    static Priest priest = new Priest(new Pair(2, 5), 1, new Pair(1, 4));
 
     public static void main(String[] args) throws Exception {
 
