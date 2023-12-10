@@ -1,4 +1,4 @@
-import java.util.concurrent.TimeUnit;
+// import java.util.concurrent.TimeUnit;
 
 public class App {
 
@@ -8,16 +8,16 @@ public class App {
     public static final String GREEN = "\033[0;32m";
     public static final String RESET = "\033[0m";
 
-    private static final int SLEEP_500 = 0;
+    // private static final int SLEEP_500 = 0;
 
-    static Knight knight = new Knight(new Pair(2, 3), 4, 1);
-    static Archer archer = new Archer(new Pair(3, 6), 0, 1);
-    static Ogre ogre = new Ogre(new Pair(3, 5), 2, 2);
-    static Goblin goblin = new Goblin(new Pair(4, 7), 0, 2);
-    static Warlock warlock = new Warlock(new Pair(4, 5), 0, new Pair(1, 3));
-    static Shaman shaman = new Shaman(new Pair(5, 6), 0, new Pair(1, 3));
-    static Monk monk = new Monk(new Pair(2, 4), 1, new Pair(2, 5));
-    static Priest priest = new Priest(new Pair(2, 5), 1, new Pair(1, 4));
+    static Knight knight = new Knight(new Pair(20, 30), 29, 5);
+    static Archer archer = new Archer(new Pair(29, 61), 0, 10);
+    static Ogre ogre = new Ogre(new Pair(23, 44), 21, 10);
+    static Goblin goblin = new Goblin(new Pair(33, 70), 0, 15);
+    static Warlock warlock = new Warlock(new Pair(35, 55), 0, new Pair(11, 37));
+    static Shaman shaman = new Shaman(new Pair(43, 58), 0, new Pair(10, 32));
+    static Monk monk = new Monk(new Pair(22, 45), 12, new Pair(23, 52));
+    static Priest priest = new Priest(new Pair(20, 55), 11, new Pair(15, 54));
 
     public static void main(String[] args) throws Exception {
 
@@ -55,7 +55,7 @@ public class App {
         if (attacker.getHealth() > 0 && defender.getHealth() > 0) {
             combatManager.attack(attacker, defender);
             System.out.println();
-            TimeUnit.MILLISECONDS.sleep(SLEEP_500); // 250
+            // TimeUnit.MILLISECONDS.sleep(SLEEP_500); // 250
 
             winner = fight(defender, attacker);
 
@@ -67,7 +67,7 @@ public class App {
             }
 
             combatManager.showKilled(attacker, defender);
-            TimeUnit.MILLISECONDS.sleep(SLEEP_500);
+            // TimeUnit.MILLISECONDS.sleep(SLEEP_500);
             System.out
                     .print(GREEN + winner.getClass().getName() + " won with " +
                             winner.getHealth() + " health");
@@ -79,7 +79,7 @@ public class App {
             System.out.println(" remaining!\n" + RESET);
             attacker.resetStats();
             defender.resetStats();
-
+            combatManager.resetTurns();
         }
 
         return winner;

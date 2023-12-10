@@ -1,7 +1,7 @@
 public class Human extends Character {
 
-    protected int baseHealth = 12;
-    protected int abilityValue = 3;
+    protected int baseHealth = 100;
+    protected int abilityValue;
 
     public Human(Pair damage, int armor, int abilityValue) {
         super(damage, armor);

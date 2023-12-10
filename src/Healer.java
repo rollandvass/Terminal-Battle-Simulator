@@ -1,6 +1,6 @@
 public class Healer extends Character {
 
-    protected int baseHealth = 14;
+    protected int baseHealth = 100;
     protected Pair abilityValueInterval;
 
     public Healer(Pair damage, int armor, Pair abilityValueInterval) {
@@ -15,7 +15,13 @@ public class Healer extends Character {
 
     @Override
     public void setHealth(int health) {
-        // Ensure that the healer's health doesn't go over the maximum value
-        this.health = Math.min(health, baseHealth + 5);
+        this.health = Math.min(health, baseHealth + 35);
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName() + "\t" + "[Health: " + getHealth()
+                + " | Damage: " + getDamage().getFirst() + "-" + (getDamage().getSecond() + getAbilityValue())
+                + " | Armor: " + getArmor() + "]";
     }
 }

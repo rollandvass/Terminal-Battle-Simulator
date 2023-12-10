@@ -1,11 +1,12 @@
 The numbers represent how many times a character won the tournament - (500 TESTS RUN)
-Knight: 92
-Archer: 64
-Ogre: 75
-Goblin: 52
-Warlock: 48
-Shaman: 60
-Monk: 54
-Priest: 55
+Knight: 70
+Archer: 61
+Ogre: 60
+Goblin: 50
+Warlock: 66
+Shaman: 66
+Monk: 62
+Priest: 65
 
-Average should be around 62
+Average for 500 tests should be: 62
+RESULTS MAY VARY!

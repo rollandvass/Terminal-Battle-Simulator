@@ -1,6 +1,6 @@
 public class Caster extends Character {
 
-    protected int baseHealth = 14;
+    protected int baseHealth = 100;
     protected Pair abilityValueInterval;
 
     public Caster(Pair damage, int armor, Pair abilityValueInterval) {
@@ -11,6 +11,13 @@ public class Caster extends Character {
     @Override
     public Pair getAbilityValueInterval() {
         return abilityValueInterval;
+    }
+
+    @Override
+    public String toString() {
+        return getClass().getName() + "\t" + "[Health: " + getHealth()
+                + " | Damage: " + getDamage().getFirst() + "-" + (getDamage().getSecond() + getAbilityValue())
+                + " | Armor: " + getArmor() + "]";
     }
 
 }

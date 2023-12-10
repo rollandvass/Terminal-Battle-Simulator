@@ -2,12 +2,12 @@ public class Goblin extends Orc {
 
     public Goblin(Pair damage, int armor, int abilityValue) {
         super(damage, armor, abilityValue);
-        setHealth(baseHealth + 1);
+        setHealth(baseHealth - 10);
     }
 
     @Override
     public void resetStats() {
-        setHealth(baseHealth + 1);
+        setHealth(baseHealth - 10);
         setArmor(initialArmor);
     }
 

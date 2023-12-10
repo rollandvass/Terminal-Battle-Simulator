@@ -4,6 +4,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+class CharacterWrapper {
+    public Character character;
+
+    public CharacterWrapper(Character character) {
+        this.character = character;
+    }
+}
+
 public class Testing {
 
     static int knightWinCount = 0, archerWinCount = 0, ogreWinCount = 0, goblinWinCount = 0, warlockWinCount = 0,
@@ -33,6 +41,17 @@ public class Testing {
 
     private static void runAndWriteDataToFile(int numberOfRuns) throws IOException, InterruptedException {
         try (FileWriter writer = new FileWriter(file)) {
+            CharacterWrapper[] fighters = {
+                    new CharacterWrapper(App.knight),
+                    new CharacterWrapper(App.warlock),
+                    new CharacterWrapper(App.ogre),
+                    new CharacterWrapper(App.monk),
+                    new CharacterWrapper(App.archer),
+                    new CharacterWrapper(App.shaman),
+                    new CharacterWrapper(App.goblin),
+                    new CharacterWrapper(App.priest)
+            };
+
             int i;
             for (i = 0; i < numberOfRuns; i++) {
                 Character winnerQF1 = App.fight(App.knight, App.warlock);
@@ -46,10 +65,23 @@ public class Testing {
                 Character finalWinner = App.fight(winnerSF1, winnerSF2);
 
                 writer.write(finalWinner.getClass().getName() + "\n");
+
+                swap(fighters[0], fighters[1]);
+                swap(fighters[2], fighters[3]);
+                swap(fighters[4], fighters[5]);
+                swap(fighters[6], fighters[7]);
+
+                swap(fighters[1], fighters[2]);
             }
         } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static void swap(CharacterWrapper char1, CharacterWrapper char2) {
+        Character temp = char1.character;
+        char1.character = char2.character;
+        char2.character = temp;
     }
 
     private static void readDataFromFile() throws FileNotFoundException {
@@ -104,7 +136,8 @@ public class Testing {
             statisticsWriter.write("Shaman: " + shamanWinCount + "\n");
             statisticsWriter.write("Monk: " + monkWinCount + "\n");
             statisticsWriter.write("Priest: " + priestWinCount + "\n");
-            statisticsWriter.write("\nAverage should be around " + numberOfRuns / 8);
+            statisticsWriter.write("\nAverage for " + numberOfRuns + " tests should be: " + numberOfRuns / 8);
+            statisticsWriter.write("\nRESULTS MAY VARY!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

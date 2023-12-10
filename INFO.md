@@ -1,3 +1,73 @@
+> Management technologies used: Trello, Git
+
+-
+
+> Testing.java:
+
+- Used for testing the game.
+- getGameStatistics(numberOfRuns) method takes a parameter of int type and calculates how many times a character won in [numberOfRuns] tournaments.
+
+-
+
+> App.java:
+
+- The fight() method:
+
+  - Is recursive and switches between the attacker & defender after one attack.
+  - Returns a winner so the tournament can be implemented.
+
+-
+
+> CombatManager.java:
+
+The attack() method:
+
+```Java
+if (attackSuccessful()) { // attacker successfully attacked defender
+
+    if (abilityCasted()) { // attacker casted an ability (can't be parried)
+
+        // instance checks
+        if (attacker instanceof Human) {
+            // double strike attack
+            // handle defender armor
+            // update defender health/armor
+            // print attack
+            // print defender
+        }
+
+        if (attacker instanceof Orc) {
+            // critical strike attack (break armor)
+            // update defender health/armor
+            // print attack
+            // print defender
+        }
+
+        if (attacker instanceof Caster) {
+            // calculate burn amount
+            // spell burn ignores armor, so update defender health only
+            // print attack
+            // print defender
+        }
+
+        if (attacker instanceof Healer) {
+            // calculate heal amount
+            // update attacker health (healer)
+            // print heal
+            // print attacker (healer)
+        }
+
+    } else { // no abilities were casted
+        // classic attack
+        // handle armor damage
+        // print attack
+    }
+
+} else { // attack parried
+    // print parry
+}
+```
+
 # Winner depends on these factors:
 
 - randomized damage (interval),
@@ -6,23 +76,17 @@
 
 -
 
-> Showcase (of fighters):
+> Abilities:
 
-Humans | Ability: Can double strike the enemy within the same turn (second hit = damage + doubleStrikeDamage)
-Knight [Health: 14 | Damage: 3-4 | Armor: 6]
-Archer [Health: 9 | Damage: 4-8 | Armor: 0]
+Humans can double strike the enemy.
+Orcs can critically strike the enemy.
+Casters can cast a spell on the enemy.
+Healers can heal themselves.
 
-Orcs | Ability: Can critically strike the enemy (destroys armor & damage = damage + criticalDamage)
-Ogre [Health: 10 | Damage: 5-9 | Armor: 5]
-Goblin [Health: 10 | Damage: 7-11 | Armor: 0]
-
-Casters | Ability: Can cast a spell (ignores armor) that burns the enemy for 1-3 health each caster's turn
-Warlock [Health: 12 | Damage: 4-5 | Armor: 0]
-Shaman [Health: 11 | Damage: 5-6 | Armor: 0]
-
-Healers | Ability: Can heal themselves for 4-6 health
-Monk [Health: 19 | Damage: 2-4 | Armor: 1]
-Priest [Health: 19 | Damage: 3-4 | Armor: 1]
+Double strike: Two hits & second hit has + damage
+Critical strike: Breaks armor & + damage
+Spell: Burns the enemy for x-y health on his turns & ignores armor
+Heal: Heal for x-y health
 
 -
 
@@ -61,23 +125,6 @@ Healer: (baseHP = 14 | heal = 4-6)
 
 - Monk [HP: baseHP + 5 | ATK: 2-4 | DEF: 1]
 - Priest [HP: baseHP + 3 | ATK: 3-4 | DEF: 1]
-
--
-
-> Abilities:
-
-Humans | Can double strike the enemy within the same turn (second hit = damage + doubleStrikeDamage) (can be parried)
--Display text: [Attacker] double striked [Defender] and dealt x damage!
-
-Orcs | Can critically strike enemy (destroys armor & damage = damage + criticalDamage) (can't be parried)
--Display text 1: [Attacker] critically striked [Defender] and dealt x damage!
--Display text 2: [Attacker] broke [Defender]'s armor and dealt x damage!
-
-Casters | Can cast a spell that burns enemy for 1-3 health every caster's turn (spell burn ignores armor & can't be parried)
--Display text: [Attacker]'s spell burned [Defender] for X damage!
-
-Healers | Can heal themselves for 4-6 health
--Display text: [Attacker] healed himself for X health!
 
 -
 
@@ -131,10 +178,6 @@ Knight [Health: 3 | Damage: 3-4 | Armor: 0]
 
 Knight [Health: 14 | Damage: 3-4 | Armor: 6]
 
-# Warlock cast a spell on Knight!
-
-Warlock attacked Knight and dealt 4 damage!
-
 # Warlock's spell burned Knight for 2 health!
 
 Knight [Health: 12 | Damage: 3-4 | Armor: 2]
@@ -143,9 +186,6 @@ Knight [Health: 12 | Damage: 3-4 | Armor: 2]
 
 Knight [Health: 9 | Damage: 3-4 | Armor: 2]
 
-# Warlock's spell burned Knight for 1 health!
-
-Knight [Health: 8 | Damage: 3-4 | Armor: 2]
 .
 .
 .
@@ -159,53 +199,3 @@ Monk attacked Knight and dealt 3 damage!
 # Monk healed himself for 5 health!
 
 Monk [Health: 18 | Damage: 2-4 | Armor: 0]
-
--
-
-> Attacking logic
-
-```Java
-if (attackSuccessful()) {
-
-    if (abilityCasted()) {
-
-        if (attacker instanceof Human) {
-            // double strike attack
-            // handle defender armor
-            // update defender health
-            // print attack
-            // print defender
-        }
-
-        if (attacker instanceof Orc) {
-            // critical strike attack
-            // break armor
-            // update defender health
-            // print attack
-            // print defender
-        }
-
-        if (attacker instanceof Caster) {
-            // calculate burn amount
-            // burn ignores armor, so update defender health only
-            // print attack
-            // print defender
-        }
-
-        if (attacker instanceof Healer) {
-            // calculate heal amount
-            // update attacker health
-            // print heal
-            // print attacker
-        }
-
-    } else {
-        // classic attack
-        // handle armor
-        // print attack
-    }
-
-} else {
-    // print parry
-}
-```

@@ -3,7 +3,6 @@ public class Character {
     protected int health, armor;
     protected int initialArmor;
     private Pair damage;
-    protected int criticalDamage = 3; // to delete
 
     protected int abilityValue;
     protected Pair abilityValueInterval;
@@ -26,10 +25,6 @@ public class Character {
         this.armor = armor;
     }
 
-    public void setCriticalDamage(int criticalDamage) {
-        this.criticalDamage = criticalDamage;
-    } // to delete
-
     public void setAbilityValue(int abilityValue) {
         this.abilityValue = abilityValue;
     }
@@ -49,10 +44,6 @@ public class Character {
     public int getArmor() {
         return armor;
     }
-
-    public int getCriticalDamage() {
-        return criticalDamage;
-    } // to delete
 
     public int getAbilityValue() {
         return abilityValue;
