@@ -16,28 +16,25 @@ public class CombatManager {
     // private static final int SLEEP_1000 = 0;
 
     int matchCounter = 0;
-    int turnCounter = 1;
 
     public void attack(Character attacker, Character defender) throws InterruptedException {
         int damage = new Random().nextInt(attacker.getDamage().getFirst(), attacker.getDamage().getSecond() + 1);
-        // System.out.println(turnCounter);
 
         if (!attackSuccessful()) {
             System.out.println(CYAN + defender.getClass().getName() + " parried " + attacker.getClass().getName()
                     + "'s attack!" + RESET);
-            // turnCounter++;
             return;
         }
 
-        if (abilityCasted()) {
+        if (abilityCast()) {
             int abilityDamage = attacker.getAbilityValue();
 
             if (attacker instanceof Human) {
                 int doubleStrikeDamage = (damage * 2) + abilityDamage;
-                handleAttackWithAbility(attacker, defender, doubleStrikeDamage, "double striked");
+                handleAbilityAttack(attacker, defender, doubleStrikeDamage, "double striked");
             } else if (attacker instanceof Orc) {
                 int criticalStrikeDamage = damage + abilityDamage;
-                handleAttackWithAbility(attacker, defender, criticalStrikeDamage, "critically striked");
+                handleAbilityAttack(attacker, defender, criticalStrikeDamage, "critically striked");
             } else if (attacker instanceof Caster) {
                 int burnDamage = new Random().nextInt(attacker.getAbilityValueInterval().getFirst(),
                         attacker.getAbilityValueInterval().getSecond() + 1);
@@ -58,10 +55,9 @@ public class CombatManager {
         } else {
             handleClassicAttack(attacker, defender, damage);
         }
-        // turnCounter++;
     }
 
-    private void handleAttackWithAbility(Character attacker, Character defender, int totalDamage, String attackType) {
+    private void handleAbilityAttack(Character attacker, Character defender, int totalDamage, String attackType) {
         if (hasArmor(defender)) {
             int remainderDamage = totalDamage - defender.getArmor();
             defender.setArmor(Math.max(0, defender.getArmor() - totalDamage));
@@ -109,17 +105,13 @@ public class CombatManager {
     }
 
     // 15% chance to cast ability
-    public boolean abilityCasted() {
+    public boolean abilityCast() {
         int random = new Random().nextInt(1, 101);
         return random <= 15;
     }
 
     public boolean hasArmor(Character defender) {
         return defender.getArmor() > 0;
-    }
-
-    public void resetTurns() {
-        turnCounter = 1;
     }
 
     public void showKilled(Character attacker, Character defender) throws InterruptedException {

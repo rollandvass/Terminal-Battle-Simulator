@@ -79,7 +79,6 @@ public class App {
             System.out.println(" remaining!\n" + RESET);
             attacker.resetStats();
             defender.resetStats();
-            combatManager.resetTurns();
         }
 
         return winner;

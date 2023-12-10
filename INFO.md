@@ -6,6 +6,7 @@
 
 - Used for testing the game.
 - getGameStatistics(numberOfRuns) method takes a parameter of int type and calculates how many times a character won in [numberOfRuns] tournaments.
+- swap() method swaps two characters, so in the next tournament, fighter2 will start instead of fighter1.
 
 -
 
@@ -23,56 +24,42 @@
 The attack() method:
 
 ```Java
-if (attackSuccessful()) { // attacker successfully attacked defender
+public void attack(Character attacker, Character defender) {
+        // calculate damage
 
-    if (abilityCasted()) { // attacker casted an ability (can't be parried)
-
-        // instance checks
-        if (attacker instanceof Human) {
-            // double strike attack
-            // handle defender armor
-            // update defender health/armor
-            // print attack
-            // print defender
+        if (!attackSuccessful()) {
+            // parry
         }
 
-        if (attacker instanceof Orc) {
-            // critical strike attack (break armor)
-            // update defender health/armor
-            // print attack
-            // print defender
-        }
+        if (abilityCast()) {
+            // calculate ability damage
 
-        if (attacker instanceof Caster) {
-            // calculate burn amount
-            // spell burn ignores armor, so update defender health only
-            // print attack
-            // print defender
+            if (attacker instanceof Human) {
+                // handle ability attack
+            } else if (attacker instanceof Orc) {
+                // handle ability attack
+            } else if (attacker instanceof Caster) {
+                // calculate burn amount
+                // spell burn ignores armor, so update defender health only
+                // print attack
+                // print defender
+            } else if (attacker instanceof Healer) {
+                // calculate heal amount
+                // update attacker health (healer)
+                // print heal
+                // print attacker (healer)
+            }
+        } else { // no abilities were cast
+            // handle classic attack
         }
-
-        if (attacker instanceof Healer) {
-            // calculate heal amount
-            // update attacker health (healer)
-            // print heal
-            // print attacker (healer)
-        }
-
-    } else { // no abilities were casted
-        // classic attack
-        // handle armor damage
-        // print attack
     }
-
-} else { // attack parried
-    // print parry
-}
 ```
 
-# Winner depends on these factors:
+> Winner depends on these factors:
 
 - randomized damage (interval),
-- randomized abilities (and who casted) - 15% chance,
-- randomized parries (and who parried) - 20% chance
+- randomized abilities - 15% chance,
+- randomized parries - 20% chance
 
 -
 
@@ -92,10 +79,10 @@ Heal: Heal for x-y health
 
 > Tournament
 
-winnerQF1 = fight(knight, warlock)
-winnerQF2 = fight(ogre, monk)
-winnerQF3 = fight(archer, shaman)
-winnerQF4 = fight(goblin, priest)
+winnerQF1 = fight(fighter1, fighter2)
+winnerQF2 = fight(fighter3, fighter4)
+winnerQF3 = fight(fighter5, fighter6)
+winnerQF4 = fight(fighter7, fighter8)
 
 winnerSF1 = fight(winnerQF1, winnerQF3)
 winnerSF2 = fight(winnerQF2, winnerQF4)
@@ -104,31 +91,7 @@ finalWinner = fight(winnerSF1, winnerSF2)
 
 -
 
-> Stats:
-
-Human: (baseHP = 12 | doubleStrikeDamage = 3)
-
-- Knight [HP: baseHP + 2 | ATK: 3-4 | DEF: 6]
-- Archer [HP: baseHP - 3 | ATK: 4-8 | DEF: 0]
-
-Orc: (baseHP = 18 | criticalDamage = 3)
-
-- Ogre [HP: baseHP / 2 + 1 | ATK: 5-6 (+criticalDamage) | DEF: 4]
-- Goblin [HP: baseHP / 2 - 3 | ATK: 7-9 (+criticalDamage) | DEF: 0]
-
-Caster: (baseHP = 10 | spellBurnDamage = 1-3)
-
-- Warlock [HP: baseHP + 2 | ATK: 4-5 | DEF: 0]
-- Shaman [HP: baseHP + 1 | ATK: 5-6 | DEF: 0]
-
-Healer: (baseHP = 14 | heal = 4-6)
-
-- Monk [HP: baseHP + 5 | ATK: 2-4 | DEF: 1]
-- Priest [HP: baseHP + 3 | ATK: 3-4 | DEF: 1]
-
--
-
-> Scenarios:
+> Scenarios for abilities:
 
 Knight [Health: 14 | Damage: 3-4 | Armor: 6]
 Archer [Health: 9 | Damage: 4-8 | Armor: 0]
@@ -180,11 +143,11 @@ Knight [Health: 14 | Damage: 3-4 | Armor: 6]
 
 # Warlock's spell burned Knight for 2 health!
 
-Knight [Health: 12 | Damage: 3-4 | Armor: 2]
+Knight [Health: 12 | Damage: 3-4 | Armor: 6]
 
 # Warlock's spell burned Knight for 3 health!
 
-Knight [Health: 9 | Damage: 3-4 | Armor: 2]
+Knight [Health: 9 | Damage: 3-4 | Armor: 6]
 
 .
 .
