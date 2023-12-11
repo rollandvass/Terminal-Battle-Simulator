@@ -48,7 +48,7 @@ The game introduces variability through the following randomized events:
   - Characters may successfully parry (dodge) enemy attacks. (20%)
 
 - **Randomized Ability Casts:**
-  - The success of abilities such as Double Strike, Critically Strike, Spellcast, or Self-Heal is randomized. (15%)
+  - The success of abilities such as Double Strike, Critical Strike, Spellcast, or Self-Heal is randomized. (15%)
 
 - **Randomized Damage:**
   - Damage dealt is within a specified interval, adding an element of uncertainty to each encounter.
