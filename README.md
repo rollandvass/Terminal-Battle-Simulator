@@ -16,7 +16,7 @@ Welcome to the Battle-Simulator, a text and console-based game where characters 
     java App
     ```
 
-3. **Follow the on-screen instructions to create characters, send them into battle, and witness the unpredictable outcomes.**
+3. **Modify or create characters in App.java, send them into battle, and witness the unpredictable outcomes.**
 
 ## Races and Abilities
 
