@@ -18,6 +18,9 @@ Welcome to Battle Simulator, a text and console-based game where characters from
 
 3. **Modify or create characters in App.java, send them into battle, and witness the unpredictable outcomes.**
 
+4. **If you feel like you created powerful characters that are destroying the enemies, you can use the Testing.java class to see the statistics in Statistics.txt and further take action in balancing the characters out.**
+
+
 ## Races and Abilities
 
 ### 1. Humans
