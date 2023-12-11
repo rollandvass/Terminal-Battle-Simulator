@@ -1,6 +1,6 @@
-# Java Terminal Battle Game
+# Text/Console Based Battle Simulator
 
-Welcome to the Battle-Simulator, a text and console-based game where characters from different races clash in a tournament. Dive into the world of Humans, Orcs, Casters, and Healers, each with unique abilities, and experience thrilling battles with randomized outcomes.
+Welcome to Battle Simulator, a text and console-based game where characters from different races clash in a tournament. Dive into the world of Humans, Orcs, Casters, and Healers, each with unique abilities, and experience thrilling battles with randomized outcomes.
 
 ## How to Play
 
