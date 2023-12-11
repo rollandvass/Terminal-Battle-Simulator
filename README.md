@@ -55,7 +55,7 @@ The game introduces variability through the following randomized events:
 
 ## Contributions
 
-Feel free to contribute to the game [here](https://github.com/iRxllz/Battle-Simulator) by submitting issues or pull requests. Your ideas and improvements are welcome!
+Feel free to contribute to the game by submitting issues [here](https://github.com/iRxllz/Battle-Simulator/issues) or create pull requests. Your ideas and improvements are welcome!
 
 ## License
 
